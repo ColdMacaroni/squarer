@@ -6,7 +6,8 @@ BLUR_INPUT_PATH = r'.\blur_input'
 TRANSPARENT_INPUT_PATH = r'.\transparent_input'
 OUTPUT_PATH = r'.\output'
 
-to_convert = [f for f in listdir(INPUT_PATH) if isfile(join(INPUT_PATH, f))]
+blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f))]
+transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
 
 print(to_convert)
 
