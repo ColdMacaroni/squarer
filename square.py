@@ -55,6 +55,22 @@ def blurry_background(old_image):
 
     new_image = deepcopy(old_image)
 
+
+    if big_side == x:
+        size_ratio = x/y
+
+        new_image.resize((x*size_ratio, big_side))
+
+    elif big_side == y:
+        size_ratio = y/x
+
+        new_image.resize((big_side, y*size_ratio))
+
+    else:
+        print('Something has gone really wrong')
+
+    new_image.show()
+
     return background
 new_images = []
 
