@@ -25,18 +25,19 @@ for image in to_convert:
     #   Biggest side's coords are 0 so it stays in line with the new canvas
     #   new side's coords are (big_side-small_side)/2, gets the difference and splits it so the image is at the middle
 
+    # Calculation here inpendent of the stuff.
+    special_coord = int((big_side-small_side)/2)
+
     # If the x side is the biggest
     if big_side == x:
-        pass
+        new_image.paste(old_img, (0, special_coord))
 
     elif big_side == y:
-        pass
+        new_image.paste(old_img, (special_coord, 0))
 
     else:
         print('Something has gone really wrong')
         continue
-
-    new_image.paste(old_img, (x,y))
 
     # Get rid of extension
     # Allows for filenames to have . in them
@@ -47,4 +48,6 @@ for image in to_convert:
     # Save with the new extension
     new_image.save(join(OUTPUT_PATH, new_filename + '.png'))
 
+    # Close those boys up
+    new_image.close()
     old_img.close()
