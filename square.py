@@ -3,8 +3,8 @@ from os import listdir  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 
 BLUR_INPUT_PATH = r'.\blur_input'
-BLUR_OUTPUT_PATH = r'.\output'
 
+TRANSPARENT_INPUT_PATH = r'.\transparent_input'
 OUTPUT_PATH = r'.\output'
 
 
@@ -40,7 +40,6 @@ def add_image(new_image, old_img):
 
     else:
         print('Something has gone really wrong')
-        continue
 
     return new_image
 
@@ -60,9 +59,13 @@ for image in blur_convert:
 
 # Second the transparent ones
 for image in transparent_convert:
-    pass
+    old_img = Image.open(join(INPUT_PATH, image))
 
-    new_images.append()
+    canvas = create_canvas(old_img)
+
+    new_image = add_image(canvas, old_image)
+
+    new_images.append(new_image)
 
     old_img.close()
 
