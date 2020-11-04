@@ -2,14 +2,14 @@ from PIL import Image, ImageDraw  # Pillow library, for all image handling
 from os import listdir  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 
-INPUT_PATH = r'.\input'
+BLUR_INPUT_PATH = r'.\blur_input'
+TRANSPARENT_INPUT_PATH = r'.\transparent_input'
 OUTPUT_PATH = r'.\output'
 
 to_convert = [f for f in listdir(INPUT_PATH) if isfile(join(INPUT_PATH, f))]
 
 print(to_convert)
 
-transparent = [False if input('Y for transparent, N for blur: ').strip().lower() in ['y', 'yes'] else False]
 
 for image in to_convert:
     old_img = Image.open(join(INPUT_PATH, image))
