@@ -45,6 +45,14 @@ def add_image(new_image, old_image):
 
     return new_image
 
+def blurry_background(old_image):
+    """Make the image's smallest side as big as the biggest side keeping proportions. Then blur"""
+
+    x, y = old_image.size  # Get size in pixels
+
+    big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
+
+    return background
 new_images = []
 
 # first the blurry ones
