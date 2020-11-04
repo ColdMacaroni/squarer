@@ -31,7 +31,7 @@ for image in to_convert:
     # Allows for filenames to have . in them
     filename = image.split('.')
     del filename[-1]
-    '.'.join(filename)
+    new_filename = '.'.join(filename)
 
     # Save with the new extension
-    new_image.save(filename + '.png')
+    new_image.save(new_filename + '.png')
