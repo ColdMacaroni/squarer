@@ -12,6 +12,10 @@ blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PA
 transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
 
 def create_canvas(old_img):
+    x, y = old_img.size  # Get size in pixels
+
+    big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
+
     new_image = Image.new('RGBA', (big_side, big_side), (0, 0, 0, 0)) # Square canvas. Size lenght of biggest_side
 
     old_img.close()
