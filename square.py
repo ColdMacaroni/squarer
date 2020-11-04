@@ -11,19 +11,17 @@ OUTPUT_PATH = r'.\output'
 blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f))]
 transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
 
-def create_canvas(old_img):
-    x, y = old_img.size  # Get size in pixels
+def create_canvas(old_image):
+    x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
 
     new_image = Image.new('RGBA', (big_side, big_side), (0, 0, 0, 0)) # Square canvas. Size lenght of biggest_side
 
-    old_img.close()
-
     return new_image
 
-def add_image(new_image, old_img):
-    x, y = old_img.size  # Get size in pixels
+def add_image(new_image, old_image):
+    x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
 
@@ -37,10 +35,10 @@ def add_image(new_image, old_img):
 
     # If the x side is the biggest
     if big_side == x:
-        new_image.paste(old_img, (0, special_coord))
+        new_image.paste(old_image, (0, special_coord))
 
     elif big_side == y:
-        new_image.paste(old_img, (special_coord, 0))
+        new_image.paste(old_image, (special_coord, 0))
 
     else:
         print('Something has gone really wrong')
@@ -51,34 +49,54 @@ new_images = []
 
 # first the blurry ones
 for image in blur_convert:
-    old_img = Image.open(join(INPUT_PATH, image))
+    old_image = Image.open(join(BLUR_INPUT_PATH, image))
 
-    canvas = create_canvas(old_img)
-
-    new_image = add_image(canvas, old_image)
-
-    new_images.append(new_image)
-
-    old_img.close()
-
-# Second the transparent ones
-for image in transparent_convert:
-    old_img = Image.open(join(INPUT_PATH, image))
-
-    canvas = create_canvas(old_img)
+    canvas = create_canvas(old_image)
 
     new_image = add_image(canvas, old_image)
 
     new_images.append(new_image)
 
-    old_img.close()
+    old_image.close()
 
-for image in new_images:
     # Get rid of extension
     # Allows for filenames to have . in them
     filename = image.split('.')
     del filename[-1]
     new_filename = '.'.join(filename)
 
+    final_filename =  'blur_' + new_filename + '.png'
+
     # Save with the new extension
-    new_image.save(join(OUTPUT_PATH, new_filename + '.png'))
+    new_image.save(join(OUTPUT_PATH, final_filename))
+
+    print(final_filename, 'saved')
+
+    new_image.close()
+
+# Second the transparent ones
+for image in transparent_convert:
+    old_image = Image.open(join(TRANSPARENT_INPUT_PATH, image))
+
+    canvas = create_canvas(old_image)
+
+    new_image = add_image(canvas, old_image)
+
+    new_images.append(new_image)
+
+    old_image.close()
+
+    # Get rid of extension
+    # Allows for filenames to have . in them
+    filename = image.split('.')
+    del filename[-1]
+    new_filename = '.'.join(filename)
+
+    final_filename = 'transparent_' + new_filename + '.png'
+
+    # Save with the new extension
+    new_image.save(join(OUTPUT_PATH, final_filename))
+
+    print(final_filename, 'saved')
+
+    new_image.close()
