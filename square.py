@@ -3,23 +3,25 @@ from os import listdir  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 
 BLUR_INPUT_PATH = r'.\blur_input'
-TRANSPARENT_INPUT_PATH = r'.\transparent_input'
+BLUR_OUTPUT_PATH = r'.\output'
+
 OUTPUT_PATH = r'.\output'
+
 
 blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f))]
 transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
 
-print(to_convert)
+def create_canvas(old_img):
+    new_image = Image.new('RGBA', (big_side, big_side), (0, 0, 0, 0)) # Square canvas. Size lenght of biggest_side
 
+    old_img.close()
 
-for image in to_convert:
-    old_img = Image.open(join(INPUT_PATH, image))
+    return new_image
 
+def add_image(new_image, old_img):
     x, y = old_img.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
-
-    new_image = Image.new('RGBA', (big_side, big_side), (0, 0, 0, 0)) # Square canvas. Size lenght of biggest_side
 
     # To get where to paste the image:
     #   Coords are from top left to bottom right
@@ -40,6 +42,31 @@ for image in to_convert:
         print('Something has gone really wrong')
         continue
 
+    return new_image
+
+new_images = []
+
+# first the blurry ones
+for image in blur_convert:
+    old_img = Image.open(join(INPUT_PATH, image))
+
+    canvas = create_canvas(old_img)
+
+    new_image = add_image(canvas, old_image)
+
+    new_images.append(new_image)
+
+    old_img.close()
+
+# Second the transparent ones
+for image in transparent_convert:
+    pass
+
+    new_images.append()
+
+    old_img.close()
+
+for image in new_images:
     # Get rid of extension
     # Allows for filenames to have . in them
     filename = image.split('.')
@@ -48,7 +75,3 @@ for image in to_convert:
 
     # Save with the new extension
     new_image.save(join(OUTPUT_PATH, new_filename + '.png'))
-
-    # Close those boys up
-    new_image.close()
-    old_img.close()
