@@ -34,4 +34,4 @@ for image in to_convert:
     new_filename = '.'.join(filename)
 
     # Save with the new extension
-    new_image.save(new_filename + '.png')
+    new_image.save(join(OUTPUT_PATH, new_filename + '.png'))
