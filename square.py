@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw  # Pillow library, for all image handling
 from os import listdir  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
+from copy import deepcopy
 
 BLUR_INPUT_PATH = r'.\blur_input'
 
@@ -51,6 +52,8 @@ def blurry_background(old_image):
     x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
+
+    new_image = deepcopy(old_image)
 
     return background
 new_images = []
