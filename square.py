@@ -9,7 +9,7 @@ to_convert = [f for f in listdir(INPUT_PATH) if isfile(join(INPUT_PATH, f))]
 
 print(to_convert)
 
-transparent = [True if input('Y for transparent, N for blur: ').strip().lower() in ['y', 'yes'] else False]
+transparent = [False if input('Y for transparent, N for blur: ').strip().lower() in ['y', 'yes'] else False]
 
 for image in to_convert:
     old_img = Image.open(join(INPUT_PATH, image))
