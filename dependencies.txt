@@ -1,1 +1,3 @@
-Pillow
+PIL
+os
+copy
