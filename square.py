@@ -194,12 +194,17 @@ for image in transparent_convert:
 
     new_image.close()
 
+# Third the cropped ones.
 for image in crop_convert:
     old_image = Image.open(join(CROP_INPUT_PATH, image))
 
     if DELETE_ORIGINAL:
         # Delete original
-        remove(join(TRANSPARENT_INPUT_PATH, image))
+        remove(join(CROP_INPUT_PATH, image))
+
+    new_image = crop_to_square(old_image)
+
+    old_image.close()
 
     # Get rid of extension
     # Allows for filenames to have . in them
@@ -207,7 +212,7 @@ for image in crop_convert:
     del filename[-1]
     new_filename = '.'.join(filename)
 
-    final_filename = 'transparent_' + new_filename + '.png'
+    final_filename = 'crop_' + new_filename + '.png'
 
     # Save with the new extension
     new_image.save(join(OUTPUT_PATH, final_filename))
