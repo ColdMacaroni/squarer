@@ -108,7 +108,7 @@ def blurry_background(old_image):
 
     return gauss_image
 
-new_images = []
+# Process is fairly human readable
 
 # first the blurry ones
 for image in blur_convert:
@@ -125,10 +125,7 @@ for image in blur_convert:
 
     new_image = add_image(canvas, old_image)
 
-    new_image.show()
-
-    new_images.append(new_image)
-
+    background.close()
     old_image.close()
 
     # Get rid of extension
@@ -144,6 +141,7 @@ for image in blur_convert:
 
     print(final_filename, 'saved')
 
+    canvas.close()
     new_image.close()
 
 # Second the transparent ones
@@ -153,8 +151,6 @@ for image in transparent_convert:
     canvas = create_canvas(old_image)
 
     new_image = add_image(canvas, old_image)
-
-    new_images.append(new_image)
 
     old_image.close()
 
