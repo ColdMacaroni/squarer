@@ -73,7 +73,7 @@ def blurry_background(old_image):
         print('Something has gone really wrong')
 
 
-    gauss_image = new_image.filter(ImageFilter.GaussianBlur(5))
+    gauss_image = new_image.filter(ImageFilter.GaussianBlur(10))
     gauss_image.show()
 
     input()
