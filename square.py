@@ -60,8 +60,10 @@ def blurry_background(old_image):
 
 
     if big_side == x:
+        # Find new side size
         new_big_side = int((x**2)/y)
 
+        # Resize
         new_image = copy_image.resize((new_big_side, big_side))
 
 
@@ -73,10 +75,11 @@ def blurry_background(old_image):
         cropped_image = new_image.crop((start, 0, big_side, big_side))
 
     elif big_side == y:
+        # find new side size
         new_big_side = int((y**2)/x)
 
+        # Resize
         new_image = copy_image.resize((big_side, new_big_side))
-        print('New image resized', new_image.size)
 
         # Take quarter from the top and quarter from the right to
         # leave it at the centre
@@ -91,14 +94,10 @@ def blurry_background(old_image):
         cropped_image = new_image.crop((left, top, right, bottom))
 
     else:
+        # Shouldnt be able to get here
         print('Something has gone really wrong')
+        return old_image
 
-    print(new_image.size)
-    print(cropped_image.size)
-
-    cropped_image.show()
-
-    input()
 
     gauss_image = cropped_image.filter(ImageFilter.GaussianBlur(10))
 
@@ -117,7 +116,7 @@ for image in blur_convert:
 
     background = blurry_background(old_image)
 
-    new_image = add_image(canvas, background)
+    new_image = add_image(canvas, background, True)
 
     new_image = add_image(canvas, old_image)
 
