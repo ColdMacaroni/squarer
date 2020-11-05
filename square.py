@@ -27,7 +27,7 @@ def create_canvas(old_image):
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
 
-    new_image = Image.new('RGBA', (big_side, big_side), (0, 0, 0, 0)) # Square canvas. Size lenght of biggest_side
+    new_image = Image.new('RGBA', (big_side, big_side), (255, 255, 255, 0)) # Square canvas. Size lenght of biggest_side
 
     return new_image
 
