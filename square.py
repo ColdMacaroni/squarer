@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFilter  # Pillow library, for all image handling
-from os import listdir  # To list files in a directory
+from os import listdir, remove  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 from copy import deepcopy
 
@@ -8,6 +8,11 @@ BLUR_INPUT_PATH = r'.\blur_input'
 TRANSPARENT_INPUT_PATH = r'.\transparent_input'
 OUTPUT_PATH = r'.\output'
 
+# =====-----------------------------------===== #
+# Change this to True if youd like the script to delete the original
+# image after it has been processed
+DELETE_ORIGINAL = False
+# =====-----------------------------------===== #
 
 blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f))]
 transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
@@ -128,6 +133,10 @@ for image in blur_convert:
     background.close()
     old_image.close()
 
+    if DELETE_ORIGINAL:
+        # Delete original
+        remove(join(BLUR_INPUT_PATH, image))
+
     # Get rid of extension
     # Allows for filenames to have . in them
     filename = image.split('.')
@@ -153,6 +162,10 @@ for image in transparent_convert:
     new_image = add_image(canvas, old_image)
 
     old_image.close()
+
+    if DELETE_ORIGINAL:
+        # Delete original
+        remove(join(TRANSPARENT_INPUT_PATH, image))
 
     # Get rid of extension
     # Allows for filenames to have . in them
