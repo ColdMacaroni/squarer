@@ -61,22 +61,39 @@ def blurry_background(old_image):
 
     if big_side == x:
         size_ratio = int(x/y)
-
         new_image.resize((x*size_ratio, big_side))
+
+        # Take quarter from the left and quarter from the right to
+        # crop it at the centre
+        start = big_side/2 - small_side/2
+
+        # crop((left, top, right, bottom))
+        cropped_image = new_image.crop((start, 0, small_side, small_side))
 
     elif big_side == y:
         size_ratio = int(y/x)
-
         new_image.resize((big_side, y*size_ratio))
+
+        # Take quarter from the top and quarter from the right to
+        # leave it at the centre
+        start = big_side/2 - small_side/2
+
+        print(start, '  ', x, y, '  ', big_side, small_side)
+
+        # crop((left, top, right, bottom))
+        cropped_image = new_image.crop((0, start, small_side, small_side))
 
     else:
         print('Something has gone really wrong')
 
+    print(new_image.size)
+    print(cropped_image.size)
 
-    gauss_image = new_image.filter(ImageFilter.GaussianBlur(10))
-    gauss_image.show()
+    cropped_image.save('fuck.png')
 
-    input()
+    cropped_image.show()
+
+    gauss_image = cropped_image.filter(ImageFilter.GaussianBlur(10))
 
     return gauss_image
 
@@ -86,11 +103,18 @@ new_images = []
 for image in blur_convert:
     old_image = Image.open(join(BLUR_INPUT_PATH, image))
 
+    x, y = old_image.size  # Get size in pixels
+    big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
+
     canvas = create_canvas(old_image)
 
     background = blurry_background(old_image)
 
+    new_image = add_image(canvas, background)
+
     new_image = add_image(canvas, old_image)
+
+    new_image.show()
 
     new_images.append(new_image)
 
