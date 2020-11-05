@@ -116,7 +116,7 @@ for image in blur_convert:
 
     background = blurry_background(old_image)
 
-    new_image = add_image(canvas, background, True)
+    new_image = add_image(canvas, background)
 
     new_image = add_image(canvas, old_image)
 
