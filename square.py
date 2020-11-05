@@ -60,12 +60,12 @@ def blurry_background(old_image):
 
 
     if big_side == x:
-        size_ratio = x/y
+        int(size_ratio = x/y)
 
         new_image.resize((x*size_ratio, big_side))
 
     elif big_side == y:
-        size_ratio = y/x
+        int(size_ratio = y/x)
 
         new_image.resize((big_side, y*size_ratio))
 
@@ -88,7 +88,7 @@ for image in blur_convert:
 
     canvas = create_canvas(old_image)
 
-
+    background = blurry_background(old_image)
 
     new_image = add_image(canvas, old_image)
 
