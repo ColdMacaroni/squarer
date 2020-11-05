@@ -56,32 +56,39 @@ def blurry_background(old_image):
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
 
-    new_image = deepcopy(old_image)
+    copy_image = deepcopy(old_image)
 
 
     if big_side == x:
-        size_ratio = int(x/y)
-        new_image.resize((x*size_ratio, big_side))
+        new_big_side = int((x**2)/y)
+
+        new_image = copy_image.resize((new_big_side, big_side))
+
 
         # Take quarter from the left and quarter from the right to
         # crop it at the centre
-        start = big_side/2 - small_side/2
+        start = new_big_side/2 - big_side/2
 
         # crop((left, top, right, bottom))
-        cropped_image = new_image.crop((start, 0, small_side, small_side))
+        cropped_image = new_image.crop((start, 0, big_side, big_side))
 
     elif big_side == y:
-        size_ratio = int(y/x)
-        new_image.resize((big_side, y*size_ratio))
+        new_big_side = int((y**2)/x)
+
+        new_image = copy_image.resize((big_side, new_big_side))
+        print('New image resized', new_image.size)
 
         # Take quarter from the top and quarter from the right to
         # leave it at the centre
-        start = big_side/2 - small_side/2
-
-        print(start, '  ', x, y, '  ', big_side, small_side)
+        start = new_big_side/2 - big_side/2
 
         # crop((left, top, right, bottom))
-        cropped_image = new_image.crop((0, start, small_side, small_side))
+        left = 0
+        top = start
+        right = left + big_side
+        bottom = top + big_side
+
+        cropped_image = new_image.crop((left, top, right, bottom))
 
     else:
         print('Something has gone really wrong')
@@ -89,9 +96,9 @@ def blurry_background(old_image):
     print(new_image.size)
     print(cropped_image.size)
 
-    cropped_image.save('fuck.png')
-
     cropped_image.show()
+
+    input()
 
     gauss_image = cropped_image.filter(ImageFilter.GaussianBlur(10))
 
