@@ -3,7 +3,7 @@ This bad boy takes images and makes them squares. You can choose between a trans
 
 This script does NOT crop images.
 
-Needs Pillow to run
+Needs Pillow to run. Only tested on windows
 
 # Instructions
 
