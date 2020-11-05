@@ -1,7 +1,6 @@
 # squarer
-This bad boy takes images and makes them squares. You can choose between a transparent background and a blurry one.
-
-This script does NOT crop images.
+This bad boy takes images and makes them squares.
+Options are: Blurry background, transparent background, and cropped
 
 Needs Pillow library to run. 
 
