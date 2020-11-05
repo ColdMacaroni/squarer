@@ -21,7 +21,7 @@ def create_canvas(old_image):
 
     return new_image
 
-def add_image(new_image, old_image, background = None):
+def add_image(new_image, old_image):
     x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
@@ -30,22 +30,21 @@ def add_image(new_image, old_image, background = None):
     #   Coords are from top left to bottom right
     #   Biggest side's coords are 0 so it stays in line with the new canvas
     #   new side's coords are (big_side-small_side)/2, gets the difference and splits it so the image is at the middle
-    if background == None:
-        # Calculation here inpendent of the stuff.
-        special_coord = int((big_side-small_side)/2)
 
-        # If the x side is the biggest
-        if big_side == x:
-            new_image.paste(old_image, (0, special_coord))
+    # Calculation here inpendent of the stuff.
+    special_coord = int((big_side-small_side)/2)
 
-        elif big_side == y:
-            new_image.paste(old_image, (special_coord, 0))
+    # If the x side is the biggest
+    if big_side == x:
+        new_image.paste(old_image, (0, special_coord))
 
-        else:
-            print('Something has gone really wrong')
+    elif big_side == y:
+        new_image.paste(old_image, (special_coord, 0))
 
     else:
-        new_image.paste(old_image, background)
+        print('Something has gone really wrong')
+
+
 
     return new_image
 
@@ -72,7 +71,13 @@ def blurry_background(old_image):
         start = new_big_side/2 - big_side/2
 
         # crop((left, top, right, bottom))
-        cropped_image = new_image.crop((start, 0, big_side, big_side))
+        left = start
+        top = 0
+        right = left + big_side
+        bottom = top + big_side
+
+        # crop((left, top, right, bottom))
+        cropped_image = new_image.crop((left, top, right, bottom))
 
     elif big_side == y:
         # find new side size
