@@ -45,7 +45,7 @@ def add_image(new_image, old_image, background = None):
             print('Something has gone really wrong')
 
     else:
-        new_image.paste()
+        new_image.paste(old_image, background)
 
     return new_image
 
@@ -72,11 +72,14 @@ def blurry_background(old_image):
     else:
         print('Something has gone really wrong')
 
-    new_image.show()
 
-    return new_image
+    gauss_image = new_image.filter(ImageFilter.GaussianBlur(5))
+    gauss_image.show()
 
-    return background
+    input()
+
+    return gauss_image
+
 new_images = []
 
 # first the blurry ones
