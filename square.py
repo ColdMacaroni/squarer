@@ -53,22 +53,17 @@ def add_image(new_image, old_image):
 
     return new_image
 
-def blurry_background(old_image):
-    """Make the image's smallest side as big as the biggest side keeping proportions. Then blur"""
-
+def crop_to_square(old_image):
     x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
-
-    copy_image = deepcopy(old_image)
-
 
     if big_side == x:
         # Find new side size
         new_big_side = int((x**2)/y)
 
         # Resize
-        new_image = copy_image.resize((new_big_side, big_side))
+        new_image = old_image.resize((new_big_side, big_side))
 
 
         # Take quarter from the left and quarter from the right to
@@ -108,6 +103,18 @@ def blurry_background(old_image):
         print('Something has gone really wrong')
         return old_image
 
+    return cropped_image
+
+def blurry_background(old_image):
+    """Make the image's smallest side as big as the biggest side keeping proportions. Then blur"""
+
+    x, y = old_image.size  # Get size in pixels
+
+    big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
+
+    copy_image = deepcopy(old_image)
+
+    cropped_image = crop_to_square(copy_image)
 
     gauss_image = cropped_image.filter(ImageFilter.GaussianBlur(10))
 
