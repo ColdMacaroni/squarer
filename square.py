@@ -21,7 +21,7 @@ def create_canvas(old_image):
 
     return new_image
 
-def add_image(new_image, old_image):
+def add_image(new_image, old_image, background = None):
     x, y = old_image.size  # Get size in pixels
 
     big_side, small_side = max([x, y]), min([x,y]) # Get biggest and smallest side for creating the square
@@ -30,19 +30,22 @@ def add_image(new_image, old_image):
     #   Coords are from top left to bottom right
     #   Biggest side's coords are 0 so it stays in line with the new canvas
     #   new side's coords are (big_side-small_side)/2, gets the difference and splits it so the image is at the middle
+    if background == None:
+        # Calculation here inpendent of the stuff.
+        special_coord = int((big_side-small_side)/2)
 
-    # Calculation here inpendent of the stuff.
-    special_coord = int((big_side-small_side)/2)
+        # If the x side is the biggest
+        if big_side == x:
+            new_image.paste(old_image, (0, special_coord))
 
-    # If the x side is the biggest
-    if big_side == x:
-        new_image.paste(old_image, (0, special_coord))
+        elif big_side == y:
+            new_image.paste(old_image, (special_coord, 0))
 
-    elif big_side == y:
-        new_image.paste(old_image, (special_coord, 0))
+        else:
+            print('Something has gone really wrong')
 
     else:
-        print('Something has gone really wrong')
+        new_image.paste()
 
     return new_image
 
@@ -71,6 +74,8 @@ def blurry_background(old_image):
 
     new_image.show()
 
+    return new_image
+
     return background
 new_images = []
 
@@ -79,6 +84,8 @@ for image in blur_convert:
     old_image = Image.open(join(BLUR_INPUT_PATH, image))
 
     canvas = create_canvas(old_image)
+
+
 
     new_image = add_image(canvas, old_image)
 
