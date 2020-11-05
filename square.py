@@ -60,12 +60,12 @@ def blurry_background(old_image):
 
 
     if big_side == x:
-        int(size_ratio = x/y)
+        size_ratio = int(x/y)
 
         new_image.resize((x*size_ratio, big_side))
 
     elif big_side == y:
-        int(size_ratio = y/x)
+        size_ratio = int(y/x)
 
         new_image.resize((big_side, y*size_ratio))
 
