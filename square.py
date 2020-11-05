@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw  # Pillow library, for all image handling
+from PIL import Image, ImageDraw, ImageFilter  # Pillow library, for all image handling
 from os import listdir  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 from copy import deepcopy
