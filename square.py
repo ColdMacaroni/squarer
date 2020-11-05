@@ -84,7 +84,7 @@ def crop_to_square(old_image):
         new_big_side = int((y**2)/x)
 
         # Resize
-        new_image = copy_image.resize((big_side, new_big_side))
+        new_image = old_image.resize((big_side, new_big_side))
 
         # Take quarter from the top and quarter from the right to
         # leave it at the centre
