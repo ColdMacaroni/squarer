@@ -3,10 +3,13 @@ from os import listdir, remove  # To list files in a directory
 from os.path import isfile, join  # Check if path is an actual file and join 2 paths together
 from copy import deepcopy
 
-BLUR_INPUT_PATH = r'.\blur_input'
+BLUR_INPUT_PATH = r'./blur_input'
 
-TRANSPARENT_INPUT_PATH = r'.\transparent_input'
-OUTPUT_PATH = r'.\output'
+TRANSPARENT_INPUT_PATH = r'./transparent_input'
+
+CROP_INPUT_PATH = r'./crop_input'
+
+OUTPUT_PATH = r'./output'
 
 # =====-----------------------------------===== #
 # Change this to True if youd like the script to delete the original
@@ -14,8 +17,10 @@ OUTPUT_PATH = r'.\output'
 DELETE_ORIGINAL = False
 # =====-----------------------------------===== #
 
-blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f))]
-transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f))]
+blur_convert = [f for f in listdir(BLUR_INPUT_PATH) if isfile(join(BLUR_INPUT_PATH, f)) and f[0] != '.']
+transparent_convert = [f for f in listdir(TRANSPARENT_INPUT_PATH) if isfile(join(TRANSPARENT_INPUT_PATH, f)) and f[0] != '.']
+crop_convert = [f for f in listdir(CROP_INPUT_PATH) if isfile(join(CROP_INPUT_PATH, f)) and f[0] != '.']
+
 
 def create_canvas(old_image):
     x, y = old_image.size  # Get size in pixels
@@ -169,6 +174,28 @@ for image in transparent_convert:
     new_image = add_image(canvas, old_image)
 
     old_image.close()
+
+    if DELETE_ORIGINAL:
+        # Delete original
+        remove(join(TRANSPARENT_INPUT_PATH, image))
+
+    # Get rid of extension
+    # Allows for filenames to have . in them
+    filename = image.split('.')
+    del filename[-1]
+    new_filename = '.'.join(filename)
+
+    final_filename = 'transparent_' + new_filename + '.png'
+
+    # Save with the new extension
+    new_image.save(join(OUTPUT_PATH, final_filename))
+
+    print(final_filename, 'saved')
+
+    new_image.close()
+
+for image in crop_convert:
+    old_image = Image.open(join(CROP_INPUT_PATH, image))
 
     if DELETE_ORIGINAL:
         # Delete original
